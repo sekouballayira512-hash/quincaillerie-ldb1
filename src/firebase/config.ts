@@ -1,7 +1,19 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDocFromServer } from 'firebase/firestore';
-import firebaseConfig from '../../firebase-applet-config.json';
+import rawFirebaseConfig from '../../firebase-applet-config.json';
+
+// Support both firebase-applet-config.json and optional VITE_ environment variables for custom Netlify deployments
+export const firebaseConfig = {
+  apiKey: (import.meta.env.VITE_FIREBASE_API_KEY as string) || rawFirebaseConfig.apiKey,
+  authDomain: (import.meta.env.VITE_FIREBASE_AUTH_DOMAIN as string) || rawFirebaseConfig.authDomain,
+  projectId: (import.meta.env.VITE_FIREBASE_PROJECT_ID as string) || rawFirebaseConfig.projectId,
+  storageBucket: (import.meta.env.VITE_FIREBASE_STORAGE_BUCKET as string) || rawFirebaseConfig.storageBucket,
+  messagingSenderId: (import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID as string) || rawFirebaseConfig.messagingSenderId,
+  appId: (import.meta.env.VITE_FIREBASE_APP_ID as string) || rawFirebaseConfig.appId,
+  measurementId: (import.meta.env.VITE_FIREBASE_MEASUREMENT_ID as string) || rawFirebaseConfig.measurementId,
+  firestoreDatabaseId: (import.meta.env.VITE_FIREBASE_DATABASE_ID as string) || rawFirebaseConfig.firestoreDatabaseId,
+};
 
 const app = initializeApp(firebaseConfig);
 

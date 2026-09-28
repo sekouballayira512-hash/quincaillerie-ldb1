@@ -7,6 +7,8 @@ import {
   signOut,
   sendPasswordResetEmail,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
   updateProfile,
 } from 'firebase/auth';
@@ -32,7 +34,7 @@ interface AuthContextType {
   signUp: (fullName: string, phone: string, email: string, password: string) => Promise<void>;
   signOutUser: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
-  signInWithGoogle: () => Promise<void>;
+  signInWithGoogle: (forceRedirect?: boolean) => Promise<void>;
   updateUserProfile: (data: Partial<UserProfile>) => Promise<void>;
 }
 
@@ -111,6 +113,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   useEffect(() => {
+    // Check for incoming redirect sign-in result (useful on mobile browsers or if popup is blocked)
+    getRedirectResult(auth)
+      .then(async (result) => {
+        if (result?.user) {
+          await fetchOrCreateProfile(result.user);
+        }
+      })
+      .catch((err) => {
+        console.warn('Redirect sign-in notice/error:', err);
+      });
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
       if (firebaseUser) {
@@ -159,10 +172,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = async (forceRedirect: boolean = false) => {
     const provider = new GoogleAuthProvider();
-    const cred = await signInWithPopup(auth, provider);
-    await fetchOrCreateProfile(cred.user);
+    // Prompt account selection
+    provider.setCustomParameters({ prompt: 'select_account' });
+
+    if (forceRedirect) {
+      await signInWithRedirect(auth, provider);
+      return;
+    }
+
+    try {
+      const cred = await signInWithPopup(auth, provider);
+      await fetchOrCreateProfile(cred.user);
+    } catch (popupError: unknown) {
+      const err = popupError as { code?: string; message?: string };
+      // If browser blocked the popup, seamlessly retry with redirect
+      if (err?.code === 'auth/popup-blocked' || err?.message?.includes('popup-blocked')) {
+        console.warn('Popup bloqué par le navigateur, tentative automatique avec signInWithRedirect...');
+        await signInWithRedirect(auth, provider);
+        return;
+      }
+      throw popupError;
+    }
   };
 
   const signOutUser = async () => {
