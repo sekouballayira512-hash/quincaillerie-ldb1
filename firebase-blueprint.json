@@ -1,0 +1,202 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "fullName": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "email": { "type": "string", "maxLength": 100 },
+        "role": { "type": "string", "enum": ["CLIENT", "ADMIN"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "fullName", "phone", "email", "role", "createdAt", "updatedAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Public hardware store product item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 200 },
+        "reference": { "type": "string", "maxLength": 50 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "category": { "type": "string", "maxLength": 80 },
+        "image_url": { "type": "string", "maxLength": 1000 },
+        "selling_price": { "type": "number" },
+        "stock": { "type": "number" },
+        "unit": { "type": "string", "maxLength": 30 },
+        "active": { "type": "boolean" },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" }
+      },
+      "required": ["name", "reference", "category", "selling_price", "stock", "unit", "active", "created_at", "updated_at"]
+    },
+    "ProductCost": {
+      "title": "ProductCost",
+      "description": "Confidential purchase price and margins for administrators only",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string", "maxLength": 128 },
+        "purchase_price": { "type": "number" },
+        "updated_at": { "type": "string" },
+        "updated_by": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["productId", "purchase_price", "updated_at"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product categories",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 100 },
+        "icon": { "type": "string", "maxLength": 100 },
+        "order": { "type": "number" },
+        "active": { "type": "boolean" },
+        "created_at": { "type": "string" }
+      },
+      "required": ["name", "order", "active", "created_at"]
+    },
+    "Quote": {
+      "title": "Quote",
+      "description": "Customer hardware quotes (devis)",
+      "type": "object",
+      "properties": {
+        "quoteNumber": { "type": "string", "maxLength": 50 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "clientName": { "type": "string", "maxLength": 100 },
+        "clientPhone": { "type": "string", "maxLength": 30 },
+        "clientEmail": { "type": "string", "maxLength": 100 },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "discount": { "type": "number" },
+        "total": { "type": "number" },
+        "clientNote": { "type": "string", "maxLength": 1000 },
+        "adminNote": { "type": "string", "maxLength": 1000 },
+        "status": { "type": "string", "enum": ["EN ATTENTE", "MODIFIÉ", "ACCEPTÉ", "REFUSÉ", "PAIEMENT EN ATTENTE", "PAYÉ"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["quoteNumber", "userId", "clientName", "clientPhone", "items", "subtotal", "discount", "total", "status", "createdAt", "updatedAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Confirmed hardware orders",
+      "type": "object",
+      "properties": {
+        "orderNumber": { "type": "string", "maxLength": 50 },
+        "quoteId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "clientName": { "type": "string", "maxLength": 100 },
+        "clientPhone": { "type": "string", "maxLength": 30 },
+        "clientAddress": { "type": "string", "maxLength": 200 },
+        "items": { "type": "array" },
+        "total": { "type": "number" },
+        "paymentMethod": { "type": "string", "maxLength": 50 },
+        "paymentStatus": { "type": "string", "maxLength": 50 },
+        "status": { "type": "string", "enum": ["EN ATTENTE", "CONFIRMÉE", "EN PRÉPARATION", "PRÊTE", "EN LIVRAISON", "LIVRÉE", "ANNULÉE"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["orderNumber", "userId", "clientName", "clientPhone", "items", "total", "status", "createdAt", "updatedAt"]
+    },
+    "Payment": {
+      "title": "Payment",
+      "description": "Manual payments submitted by customers via Wave or Orange Money",
+      "type": "object",
+      "properties": {
+        "paymentNumber": { "type": "string", "maxLength": 50 },
+        "quoteId": { "type": "string", "maxLength": 128 },
+        "orderId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "clientName": { "type": "string", "maxLength": 100 },
+        "clientPhone": { "type": "string", "maxLength": 30 },
+        "amount": { "type": "number" },
+        "method": { "type": "string", "enum": ["WAVE", "ORANGE_MONEY", "MAX_IT"] },
+        "status": { "type": "string", "enum": ["PAIEMENT EN ATTENTE", "PAYÉ", "REFUSÉ"] },
+        "refCode": { "type": "string", "maxLength": 100 },
+        "proofNote": { "type": "string", "maxLength": 500 },
+        "adminReason": { "type": "string", "maxLength": 500 },
+        "verifiedBy": { "type": "string", "maxLength": 128 },
+        "verifiedAt": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["paymentNumber", "userId", "clientName", "clientPhone", "amount", "method", "status", "createdAt", "updatedAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Customer and admin notification notices",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 150 },
+        "message": { "type": "string", "maxLength": 500 },
+        "type": { "type": "string", "maxLength": 50 },
+        "read": { "type": "boolean" },
+        "link": { "type": "string", "maxLength": 200 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["userId", "title", "message", "read", "createdAt"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "General store configuration",
+      "type": "object",
+      "properties": {
+        "storeName": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "address": { "type": "string", "maxLength": 200 },
+        "logo_url": { "type": "string", "maxLength": 1000 },
+        "banner_text": { "type": "string", "maxLength": 200 },
+        "updatedAt": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user profiles with role (CLIENT or ADMIN)"
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "List of system administrator UIDs for secure rule enforcement"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Public product catalog with selling prices and stock"
+    },
+    "/product_costs/{productId}": {
+      "schema": "ProductCost",
+      "description": "Admin-only confidential purchase prices and cost margins"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Product categories"
+    },
+    "/quotes/{quoteId}": {
+      "schema": "Quote",
+      "description": "Customer quotes and devis"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Confirmed customer orders"
+    },
+    "/payments/{paymentId}": {
+      "schema": "Payment",
+      "description": "Payment records for Wave and Orange Money"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "Notifications for users and admin"
+    },
+    "/settings/{settingId}": {
+      "schema": "Settings",
+      "description": "Application settings and business metadata"
+    }
+  }
+}

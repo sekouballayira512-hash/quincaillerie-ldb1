@@ -1,0 +1,6 @@
+{
+  "name": "Quincaillerie LDB",
+  "description": "Quincaillerie LDB - Tout pour vos projets au Mali. Matériel de construction, outillage, plomberie, électricité, peinture et quincaillerie à Bamako.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
