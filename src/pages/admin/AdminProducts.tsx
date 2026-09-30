@@ -23,6 +23,7 @@ import {
   updateProductStock,
   repairAllExistingProductImages,
 } from '../../services/productService';
+import { ProductImagePicker } from '../../components/admin/ProductImagePicker';
 
 interface AdminProductsProps {
   products: ProductWithCost[];
@@ -443,18 +444,12 @@ export const AdminProducts: React.FC<AdminProductsProps> = ({
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  URL de la photo (image_url)
-                </label>
-                <input
-                  type="url"
-                  placeholder="https://images.unsplash.com/..."
-                  value={formImageUrl}
-                  onChange={e => setFormImageUrl(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-50 text-xs text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden font-mono text-[11px]"
-                />
-              </div>
+              {/* Product Photo Selector (From Device, Camera, Web URL, or Presets) */}
+              <ProductImagePicker
+                imageUrl={formImageUrl}
+                onChange={setFormImageUrl}
+                category={formCategory}
+              />
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">

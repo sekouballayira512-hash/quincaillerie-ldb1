@@ -23,6 +23,7 @@ import {
   Wrench,
 } from 'lucide-react';
 import { importBatchProducts, repairAllExistingProductImages } from '../../services/productService';
+import { compressImageFile } from '../../utils/imageUtils';
 
 interface AdminExcelImportProps {
   onSuccess: () => void;
@@ -84,6 +85,17 @@ export const AdminExcelImport: React.FC<AdminExcelImportProps> = ({ onSuccess, o
       next[index] = item;
       return next;
     });
+  };
+
+  const handleRowImageUpload = async (index: number, file: File) => {
+    if (!file) return;
+    try {
+      const res = await compressImageFile(file, 1000, 1000, 0.82);
+      handleUpdateField(index, 'image_url', res.dataUrl);
+    } catch (err: unknown) {
+      console.error('Erreur compression image:', err);
+      alert(err instanceof Error ? err.message : 'Erreur lors du traitement de l\'image.');
+    }
   };
 
   const handleRepairExisting = async () => {
@@ -299,15 +311,28 @@ export const AdminExcelImport: React.FC<AdminExcelImportProps> = ({ onSuccess, o
                             )}
                           </td>
 
-                          {/* Live Image Thumbnail Preview */}
+                          {/* Live Image Thumbnail Preview with device picker */}
                           <td className="py-2 px-2 text-center">
-                            <div className="w-10 h-10 rounded-lg bg-slate-100 overflow-hidden mx-auto border border-slate-200 shrink-0">
+                            <label className="relative w-10 h-10 rounded-lg bg-slate-100 overflow-hidden mx-auto border border-slate-200 shrink-0 block cursor-pointer group" title="Cliquer pour choisir une photo depuis l'appareil">
                               <ImageWithFallback
                                 src={p.image_url}
                                 alt={p.name}
                                 className="w-full h-full object-cover"
                               />
-                            </div>
+                              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white transition-opacity">
+                                <Upload className="w-3.5 h-3.5" />
+                              </div>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={e => {
+                                  const f = e.target.files?.[0];
+                                  if (f) handleRowImageUpload(idx, f);
+                                  e.target.value = '';
+                                }}
+                                className="hidden"
+                              />
+                            </label>
                           </td>
 
                           {/* Editable Name */}
@@ -343,16 +368,34 @@ export const AdminExcelImport: React.FC<AdminExcelImportProps> = ({ onSuccess, o
                             />
                           </td>
 
-                          {/* Editable Image URL */}
+                          {/* Editable Image URL with device button */}
                           <td className="py-2 px-2 text-slate-500 font-mono text-[10px]">
-                            <input
-                              type="text"
-                              value={p.image_url}
-                              placeholder="https://..."
-                              onChange={e => handleUpdateField(idx, 'image_url', e.target.value)}
-                              className="w-36 px-1.5 py-1 rounded bg-transparent border border-transparent hover:border-slate-200 text-[10px] font-mono focus:bg-white focus:border-emerald-600 truncate"
-                              title={p.image_url}
-                            />
+                            <div className="flex items-center gap-1">
+                              <input
+                                type="text"
+                                value={p.image_url.startsWith('data:image/') ? '[Photo appareil sélectionnée]' : p.image_url}
+                                placeholder="https://..."
+                                onChange={e => handleUpdateField(idx, 'image_url', e.target.value)}
+                                className="w-32 px-1.5 py-1 rounded bg-transparent border border-transparent hover:border-slate-200 text-[10px] font-mono focus:bg-white focus:border-emerald-600 truncate"
+                                title={p.image_url}
+                              />
+                              <label
+                                className="p-1 rounded bg-slate-100 hover:bg-emerald-100 hover:text-emerald-800 text-slate-600 transition-colors cursor-pointer shrink-0"
+                                title="Choisir une image depuis l'appareil"
+                              >
+                                <Upload className="w-3 h-3" />
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={e => {
+                                    const f = e.target.files?.[0];
+                                    if (f) handleRowImageUpload(idx, f);
+                                    e.target.value = '';
+                                  }}
+                                  className="hidden"
+                                />
+                              </label>
+                            </div>
                           </td>
 
                           {/* Editable Selling Price */}
