@@ -45,28 +45,6 @@ export const Home: React.FC<HomeProps> = ({
 
   return (
     <div className="space-y-6 sm:space-y-8 pb-12">
-      {/* Category Horizontal Scrolling Bar */}
-      <section className="pt-2">
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-1">
-          {categories.map(cat => {
-            const isSelected = selectedCategory === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => onSelectCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-150 shrink-0 ${
-                  isSelected
-                    ? 'bg-emerald-700 text-white shadow-xs scale-102'
-                    : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200/80 shadow-2xs'
-                }`}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
       {/* Promotional Banner */}
       <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white shadow-lg p-6 sm:p-10">
         {/* Subtle geometric pattern overlay */}
@@ -151,6 +129,64 @@ export const Home: React.FC<HomeProps> = ({
             <h4 className="text-xs font-bold text-slate-900">Wave & OM</h4>
             <p className="text-[11px] text-slate-500">Paiement manuel direct</p>
           </div>
+        </div>
+      </section>
+
+      {/* Bloc Demande de Matériel Hors Catalogue (Recherche & Devis WhatsApp) */}
+      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-950 via-slate-900 to-emerald-900 border border-emerald-800/40 p-5 sm:p-7 shadow-md text-white">
+        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-48 h-48 rounded-full bg-emerald-500/15 blur-2xl pointer-events-none" />
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+          <div className="max-w-2xl space-y-2.5">
+            <h3 className="text-base sm:text-xl font-black tracking-tight text-white flex items-center gap-2">
+              <span>🔧 VOUS AVEZ BESOIN D'UN MATÉRIEL QUI N'EST PAS SUR LE SITE ?</span>
+            </h3>
+
+            <p className="text-emerald-400 font-extrabold text-sm sm:text-base">
+              Nous pouvons vous le trouver !
+            </p>
+
+            <p className="text-slate-200 text-xs sm:text-sm leading-relaxed">
+              Qu'il s'agisse de matériel électrique, plomberie, tuyauterie, raccords, robinetterie, appareillage ou autres fournitures, envoyez-nous simplement votre devis ou votre liste de matériel par WhatsApp.
+            </p>
+
+            <p className="text-emerald-200 text-xs sm:text-sm font-semibold flex items-start sm:items-center gap-1.5 pt-1">
+              <span className="text-emerald-400">✓</span>
+              <span>Notre équipe vérifie la disponibilité, vous communique les prix et peut organiser la livraison à Bamako.</span>
+            </p>
+          </div>
+
+          <div className="shrink-0 w-full md:w-auto pt-1 sm:pt-0">
+            <a
+              href={getWhatsAppUrl("Bonjour Quincaillerie LDB,\n\nJ'ai besoin d'un matériel qui n'est pas affiché sur le site. Voici mon devis / ma liste de matériel :\n- ")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs sm:text-sm shadow-md hover:shadow-emerald-500/20 transition-all active:scale-95 cursor-pointer"
+            >
+              <span>📲 Envoyer mon devis sur WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Category Horizontal Scrolling Bar */}
+      <section className="-mb-1">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-0.5">
+          {categories.map(cat => {
+            const isSelected = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => onSelectCategory(cat)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-150 shrink-0 ${
+                  isSelected
+                    ? 'bg-emerald-700 text-white shadow-xs scale-102'
+                    : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200/80 shadow-2xs'
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
         </div>
       </section>
 
