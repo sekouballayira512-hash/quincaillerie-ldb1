@@ -345,7 +345,7 @@ export const ProductImagePicker: React.FC<ProductImagePickerProps> = ({
               placeholder="https://images.unsplash.com/... ou lien Google Drive / Dropbox"
               value={imageUrl}
               onChange={e => onChange(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl bg-slate-50 text-xs text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden font-mono"
+              className="w-full px-3 py-2.5 rounded-xl bg-slate-50 text-base sm:text-xs text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden font-mono"
             />
           </div>
           <p className="text-[10px] text-slate-400">

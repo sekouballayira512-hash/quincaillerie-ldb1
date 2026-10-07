@@ -408,7 +408,7 @@ export const AdminProducts: React.FC<AdminProductsProps> = ({
                     placeholder="Ex: Perceuse Bosch 650W"
                     value={formName}
                     onChange={e => setFormName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 text-xs sm:text-sm text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 text-base sm:text-sm text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden"
                   />
                 </div>
 
@@ -422,7 +422,7 @@ export const AdminProducts: React.FC<AdminProductsProps> = ({
                     placeholder="Ex: MB001"
                     value={formRef}
                     onChange={e => setFormRef(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 text-xs sm:text-sm text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden font-mono"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 text-base sm:text-sm text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden font-mono"
                   />
                 </div>
 
@@ -433,7 +433,7 @@ export const AdminProducts: React.FC<AdminProductsProps> = ({
                   <select
                     value={formCategory}
                     onChange={e => setFormCategory(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 text-xs sm:text-sm text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 text-base sm:text-sm text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden"
                   >
                     {categories.map(c => (
                       <option key={c} value={c}>
@@ -460,7 +460,7 @@ export const AdminProducts: React.FC<AdminProductsProps> = ({
                   placeholder="Courte description pour le catalogue et la fiche produit..."
                   value={formDesc}
                   onChange={e => setFormDesc(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-50 text-xs text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden resize-none"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 text-base sm:text-sm text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden resize-none"
                 />
               </div>
 
@@ -480,7 +480,7 @@ export const AdminProducts: React.FC<AdminProductsProps> = ({
                       min={0}
                       value={formPurchasePrice}
                       onChange={e => setFormPurchasePrice(parseFloat(e.target.value) || 0)}
-                      className="w-full px-3 py-2 rounded-xl bg-white text-xs sm:text-sm font-bold text-slate-900 border border-amber-300 focus:border-emerald-600 focus:outline-hidden"
+                      className="w-full px-3 py-2 rounded-xl bg-white text-base sm:text-sm font-bold text-slate-900 border border-amber-300 focus:border-emerald-600 focus:outline-hidden"
                     />
                   </div>
 
@@ -494,7 +494,7 @@ export const AdminProducts: React.FC<AdminProductsProps> = ({
                       required
                       value={formSellingPrice}
                       onChange={e => setFormSellingPrice(parseFloat(e.target.value) || 0)}
-                      className="w-full px-3 py-2 rounded-xl bg-white text-xs sm:text-sm font-black text-emerald-800 border border-emerald-300 focus:border-emerald-600 focus:outline-hidden"
+                      className="w-full px-3 py-2 rounded-xl bg-white text-base sm:text-sm font-black text-emerald-800 border border-emerald-300 focus:border-emerald-600 focus:outline-hidden"
                     />
                   </div>
                 </div>
@@ -517,7 +517,7 @@ export const AdminProducts: React.FC<AdminProductsProps> = ({
                     required
                     value={formStock}
                     onChange={e => setFormStock(parseInt(e.target.value, 10) || 0)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 text-xs sm:text-sm font-bold text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 text-base sm:text-sm font-bold text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden"
                   />
                 </div>
 
@@ -530,7 +530,7 @@ export const AdminProducts: React.FC<AdminProductsProps> = ({
                     placeholder="Pièce, Sac, Mètre, Pot 15L..."
                     value={formUnit}
                     onChange={e => setFormUnit(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 text-xs sm:text-sm text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 text-base sm:text-sm text-slate-900 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden"
                   />
                 </div>
               </div>

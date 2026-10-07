@@ -93,7 +93,7 @@ export const Catalog: React.FC<CatalogProps> = ({
             placeholder="Rechercher un produit (nom, référence ex: MB001, CPVC...)"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-slate-50 text-sm text-slate-800 placeholder-slate-400 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden"
+            className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-slate-50 text-base sm:text-sm text-slate-800 placeholder-slate-400 border border-slate-200 focus:border-emerald-600 focus:bg-white focus:outline-hidden"
           />
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           {searchQuery && (

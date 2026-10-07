@@ -2,13 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="MobileOptimized" content="width" />
     <title>Quincaillerie LDB - Tout pour vos projets au Mali</title>
     <meta name="description" content="Quincaillerie LDB - Tout pour vos projets au Mali. Matériel de construction, outillage, plomberie, électricité, peinture et quincaillerie à Bamako." />
     <meta property="og:title" content="Quincaillerie LDB - Tout pour vos projets au Mali" />
     <meta property="og:description" content="Quincaillerie LDB - Tout pour vos projets au Mali. Matériel de construction, outillage, plomberie, électricité, peinture et quincaillerie à Bamako." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      // Prevent unwanted gesture zooming on iOS Safari
+      document.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+      });
+      document.addEventListener('gesturechange', function (e) {
+        e.preventDefault();
+      });
+      document.addEventListener('gestureend', function (e) {
+        e.preventDefault();
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>

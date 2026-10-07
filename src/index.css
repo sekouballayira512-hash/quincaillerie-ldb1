@@ -1,1 +1,55 @@
 @import "tailwindcss";
+
+/* 
+ * Configuration de stabilité mobile globale :
+ * - Empêche le débordement horizontal
+ * - Élimine les zooms intempestifs et gestes non désirés
+ */
+html,
+body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* 
+ * FIX MAJEUR POUR IOS SAFARI & ANDROID :
+ * Les navigateurs mobiles effectuent un zoom avant automatique dès qu'un champ
+ * (<input>, <select>, <textarea>) avec une taille de police inférieure à 16px reçoit le focus.
+ * En garantissant font-size: 16px sur mobile (< 768px), le navigateur n'agrandit plus l'écran.
+ */
+@media screen and (max-width: 768px) {
+  input,
+  select,
+  textarea,
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="url"],
+  input[type="tel"] {
+    font-size: 16px !important;
+  }
+}
+
+/* Désactive le double-tap to zoom sur les boutons, liens et champs */
+button,
+a,
+input,
+select,
+textarea,
+label {
+  touch-action: manipulation;
+}
